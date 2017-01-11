@@ -1,5 +1,14 @@
 import sqlite3
 
+def integercheck():
+    x = input()
+    try:
+        y = int(x)
+        return y
+    except:
+        print("Please enter your answer as an integer")
+        return integercheck()
+
 def data_collection():
 
     # Do data collection
@@ -8,8 +17,8 @@ def data_collection():
     name = input()
     print("And what did "+name+" do?")
     offence = input()
-    print("And how long do you want to be made at "+name+" for, given this greivous offence?")
-    duration = input()
+    print("And how many days do you want to be made at "+name+" for, given this greivous offence?")
+    duration = integercheck()
     #Enter data into Names table
     cur.execute('''INSERT OR IGNORE INTO Names (name) VALUES (?)''',(name,))
     #Get id for perp from Names table
@@ -22,13 +31,13 @@ def data_collection():
     conn.commit()
     print("Was that you last new greivance (Y/N)")
     lg = input()
-    while lg != "Y" and lg != "N":
+    while lg != "Y" and lg != "N" and lg != "y" and lg != "n":
         print("Please enter Y or N")
         lg = input()
-    if lg == "Y":
+    if lg == "Y" or lg =="y":
         print("OK, let's see if you have any old greivances still ongoing")
     # If there's another greivance to add recursively call data_collection()
-    elif lg == "N":
+    elif lg == "N" or lg =="n":
         data_collection()
 
 # Create database if necessary and open cursor
@@ -42,12 +51,12 @@ cur.execute('CREATE TABLE IF NOT EXISTS Names (id INTEGER NOT NULL PRIMARY KEY U
 print("Hello! Welcome to the Angry App!")
 print("Would you like to enter a new greivance (Y/N)")
 ng = input()
-while ng != "Y" and ng != "N":
+while ng != "Y" and ng != "N" and ng != "y" and ng != "n":
     print("Please enter Y or N")
     ng = input()
-if ng=="Y":
+if ng=="Y" or ng=="y":
     data_collection()
-elif ng=="N":
+elif ng=="N" or ng =="n":
     print("Smooth day at work, eh? Well, before you disappear let's just see if you're still mad at somebody for something done and past.")
 
 
