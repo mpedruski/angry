@@ -1,0 +1,54 @@
+import sqlite3
+
+def data_collection():
+
+    # Do data collection
+    print("Great, let's begin the entry process:")
+    print("First off, what's the first name of the person you're mad at?")
+    name = input()
+    print("And what did "+name+" do?")
+    offence = input()
+    print("And how long do you want to be made at "+name+" for, given this greivous offence?")
+    duration = input()
+    #Enter data into Names table
+    cur.execute('''INSERT OR IGNORE INTO Names (name) VALUES (?)''',(name,))
+    #Get id for perp from Names table
+    cur.execute('SELECT id From Names WHERE name = ? LIMIT 1',(name,))
+    for row in cur:
+        number = row[0]
+    #Insert id, offence, and duration into Offence table
+    cur.execute('INSERT INTO Offence (crime, perp, duration) VALUES (?, ?, ?)',(offence, number, duration,))
+    #Commit to the database before asking if there's a new grievance to deal with
+    conn.commit()
+    print("Was that you last new greivance (Y/N)")
+    lg = input()
+    while lg != "Y" and lg != "N":
+        print("Please enter Y or N")
+        lg = input()
+    if lg == "Y":
+        print("OK, let's see if you have any old greivances still ongoing")
+    # If there's another greivance to add recursively call data_collection()
+    elif lg == "N":
+        data_collection()
+
+# Create database if necessary and open cursor
+conn = sqlite3.connect('angrydb.sqlite3')
+cur = conn.cursor()
+
+# # Creating the Offence table only if it doesn't already exist
+cur.execute('CREATE TABLE IF NOT EXISTS Offence (crime TEXT, perp INTEGER, duration INTEGER)')
+cur.execute('CREATE TABLE IF NOT EXISTS Names (id INTEGER NOT NULL PRIMARY KEY UNIQUE, name TEXT UNIQUE)')
+
+print("Hello! Welcome to the Angry App!")
+print("Would you like to enter a new greivance (Y/N)")
+ng = input()
+while ng != "Y" and ng != "N":
+    print("Please enter Y or N")
+    ng = input()
+if ng=="Y":
+    data_collection()
+elif ng=="N":
+    print("Smooth day at work, eh? Well, before you disappear let's just see if you're still mad at somebody for something done and past.")
+
+
+cur.close()
