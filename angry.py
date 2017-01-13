@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 
 def integercheck():
     x = input()
@@ -19,6 +20,8 @@ def data_collection():
     offence = input()
     print("And how many days do you want to be made at "+name+" for, given this greivous offence?")
     duration = integercheck()
+    # Determine expiry date of anger based on current date and desired duration of anger
+    exp = datetime.date.today() + datetime.timedelta(days = duration)
     #Enter data into Names table
     cur.execute('''INSERT OR IGNORE INTO Names (name) VALUES (?)''',(name,))
     #Get id for perp from Names table
@@ -26,7 +29,7 @@ def data_collection():
     for row in cur:
         number = row[0]
     #Insert id, offence, and duration into Offence table
-    cur.execute('INSERT INTO Offence (crime, perp, duration) VALUES (?, ?, ?)',(offence, number, duration,))
+    cur.execute('INSERT INTO Offence (crime, perp, expiry) VALUES (?, ?, ?)',(offence, number, exp,))
     #Commit to the database before asking if there's a new grievance to deal with
     conn.commit()
     print("Was that you last new greivance (Y/N)")
@@ -44,8 +47,12 @@ def data_collection():
 conn = sqlite3.connect('angrydb.sqlite3')
 cur = conn.cursor()
 
+# # Destroy any exiting table (just for development testint)
+# cur.execute('DROP TABLE IF EXISTS Offence')
+# cur.execute('DROP TABLE IF EXISTS Names')
+
 # # Creating the Offence table only if it doesn't already exist
-cur.execute('CREATE TABLE IF NOT EXISTS Offence (crime TEXT, perp INTEGER, duration INTEGER)')
+cur.execute('CREATE TABLE IF NOT EXISTS Offence (crime TEXT, perp INTEGER, expiry TEXT)')
 cur.execute('CREATE TABLE IF NOT EXISTS Names (id INTEGER NOT NULL PRIMARY KEY UNIQUE, name TEXT UNIQUE)')
 
 print("Hello! Welcome to the Angry App!")
