@@ -33,7 +33,7 @@ def data_collection(x):
     name = input()
     print("\nAnd what did "+name+" do?")
     offence = input()
-    print("\nAnd how many days do you want to be made at "+name+" for, given this greivous offence?")
+    print("\nAnd how many days do you want to be mad at "+name+" for, given this greivous offence?")
     duration = integercheck()
     # Determine expiry date of anger based on current date and desired duration of anger
     exp = datetime.date.today() + datetime.timedelta(days = duration)
@@ -92,9 +92,9 @@ while ng != "Y" and ng != "N" and ng != "y" and ng != "n":
 # If they have a greivance initiate data_collection(), and regardless of their answer prompt them about a report
 if ng=="Y" or ng=="y":
     data_collection(entries)
-    print("\nAwesome! Do you check on the list of things you're angry about (Y/N)?")
+    print("\nAwesome! Do you want to check on the list of things you're angry about (Y/N)?")
 elif ng=="N" or ng =="n":
-    print("\nAwesome! Do you check on the list of things you're angry about (Y/N)?")
+    print("\nAwesome! Do you want to check on the list of things you're angry about (Y/N)?")
 ch = input()
 while ch != "Y" and ch != "N" and ch != "y" and ch != "n":
     print("Please enter Y or N")
