@@ -161,24 +161,25 @@ def data_edit():
     print("\n Here's how the data looks now: \n")
     data_report()
 
+if __name__ == '__main__':
 
-entries = 0
-# Getting input from user on whether there are greivances to enter, and whether they'd like a report
-print("Hello! Welcome to the Angry App!\n")
-print("Would you like to enter a new greivance (Y/N)")
-ng = inputcheck()
-# If they have a greivance initiate data_collection(), and regardless of their answer prompt them about a report
-if ng=="Y" or ng=="y":
-    data_collection(entries)
-    print("\nAwesome! Do you want to check on the list of things you're angry about (Y/N)?")
-elif ng=="N" or ng =="n":
-    print("\nAwesome! Do you want to check on the list of things you're angry about (Y/N)?")
-ch = inputcheck()
-# If a report is wanted call data_report
-if ch=="Y" or ch=="y":
-    print("\n")
-    data_report()
+    entries = 0
+    # Getting input from user on whether there are greivances to enter, and whether they'd like a report
+    print("Hello! Welcome to the Angry App!\n")
+    print("Would you like to enter a new greivance (Y/N)")
+    ng = inputcheck()
+    # If they have a greivance initiate data_collection(), and regardless of their answer prompt them about a report
+    if ng=="Y" or ng=="y":
+        data_collection(entries)
+        print("\nAwesome! Do you want to check on the list of things you're angry about (Y/N)?")
+    elif ng=="N" or ng =="n":
+        print("\nAwesome! Do you want to check on the list of things you're angry about (Y/N)?")
+    ch = inputcheck()
+    # If a report is wanted call data_report
+    if ch=="Y" or ch=="y":
+        print("\n")
+        data_report()
 
 
-# At the end wish the user a good day
-print("\nGoodbye!")
+    # At the end wish the user a good day
+    print("\nGoodbye!")
